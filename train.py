@@ -67,6 +67,7 @@ total_z = np.array(total_z)
 max_z = total_z.max(axis = 0)
 min_z = total_z.min(axis = 0)
 
+# Number of steps required for the interpolation
 granularity = 10
 latent_space_dims = VAE.get_latent_dims()
 

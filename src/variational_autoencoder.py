@@ -112,14 +112,11 @@ class VAE_v1(nn.Module):
                     nn.LeakyReLU()
                 )
             )
-            
             self.in_channels = h_dim
         
         self.encoder = nn.Sequential(*modules)
-        
         self.fc_mu = nn.Linear(self.flattened_channels, latent_dims)
         self.fc_var = nn.Linear(self.flattened_channels, latent_dims)
-        
         self.decoder_input = nn.Linear(latent_dims, self.flattened_channels)
         
         self.hidden_dims.reverse()
@@ -161,7 +158,6 @@ class VAE_v1(nn.Module):
         result = torch.flatten(result, start_dim = 1)
         mu = self.fc_mu(result)
         log_var = self.fc_var(result)
-        
         return [mu, log_var]
     
     def decode(self, z):
@@ -169,7 +165,6 @@ class VAE_v1(nn.Module):
         result = result.view(-1, self.last_channels, int(self.image_shape[1] / (2 ** len(self.hidden_dims))), int(self.image_shape[1] / (2 ** len(self.hidden_dims))))
         result = self.decoder(result)
         result = self.final_layer(result)
-        
         return result
     
     def reparameterize(self, mu, log_var):
@@ -180,7 +175,6 @@ class VAE_v1(nn.Module):
     def forward(self, input):
         mu, log_var = self.encode(input)
         z = self.reparameterize(mu, log_var)
-        
         return  [self.decode(z), input, mu, log_var, z]
     
     def loss_function(self, recons, input, mu, log_var):
@@ -189,9 +183,7 @@ class VAE_v1(nn.Module):
             input.reshape(input.shape[0],-1),
             reduction = "none"
         ).sum(dim = -1)
-       
         kld_loss = -0.5 * torch.sum(1 + log_var - mu.pow(2) - log_var.exp(), dim = -1)
-        
         loss = (recons_loss + kld_loss).mean(dim = 0)
         return loss
         
@@ -199,7 +191,6 @@ class VAE_v1(nn.Module):
         z = torch.randn(num_samples, self.latent_dims)
         z = z.to(device)
         samples = self.decode(z)
-        
         return samples
     
     def generate(self, x):

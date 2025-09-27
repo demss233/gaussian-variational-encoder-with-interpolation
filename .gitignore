@@ -1,2 +1,3 @@
 data/age_gender.csv
 venv/
+__pycache__/

@@ -57,7 +57,7 @@ pip install torch torchvision tqdm matplotlib pandas numpy
 - You should see **interpolations and generated faces** plotted at the end.
 
 3. **Dataset**
-The dataset for this implementation can be found at [Kaggle](https://www.kaggle.com/datasets/nipunarora8/age-gender-and-ethnicity-face-data-csv)
+ - The dataset for this implementation can be found at [Kaggle](https://www.kaggle.com/datasets/nipunarora8/age-gender-and-ethnicity-face-data-csv)
 -  After downloading the dataset, make a new folder '**data**' and paste the **dataset (.csv)** there.
 -  then run python train.py and you shall see interpolations.
 
